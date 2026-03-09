@@ -12,7 +12,41 @@ export default function Map() {
       attribution: "&copy; OpenStreetMap contributors",
     }).addTo(map)
 
+    let marker: L.Marker<any>
+    let circle: L.Circle<any>
+
+    map.locate({
+      watch: true,
+      setView: true,
+      maxZoom: 16,
+      enableHighAccuracy: true,
+    })
+
+    map.on("locationfound", (e) => {
+      const radius = e.accuracy
+
+      if (marker) {
+        marker.setLatLng(e.latlng)
+        circle.setLatLng(e.latlng)
+        circle.setRadius(radius)
+      } else {
+        marker = L.marker(e.latlng)
+          .addTo(map)
+          .bindPopup("Your location")
+          .openPopup()
+
+        circle = L.circle(e.latlng, {
+          radius: radius,
+        }).addTo(map)
+      }
+    })
+
+    map.on("locationerror", (e) => {
+      console.log("Location error:", e.message)
+    })
+
     return () => {
+      map.stopLocate()
       map.remove()
     }
   }, [])
