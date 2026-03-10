@@ -1,8 +1,6 @@
-//denne er ikke ferdigstilt, fortsett senere. Per nå er den samme som i 
-import "leaflet/dist/leaflet.css"
-import './globals.css'
+import Link from "next/link";
 
-export default function RootLayout ({
+export default function Layout ({
     children,
 }: Readonly<{
     children: React.ReactNode;
