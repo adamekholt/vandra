@@ -1,7 +1,7 @@
-export default function Page() {
+export default function Page({ params }: Readonly<{ params: { id: string } }>) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Trail update or create</h1>
-    </main>
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+      {params.id}
+    </div>
   )
 }

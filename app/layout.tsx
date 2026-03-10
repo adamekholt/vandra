@@ -8,13 +8,15 @@ export default function RootLayout ({
     children: React.ReactNode;
 }>) {
     return (
-        <div>
-            <nav>
+        <html>
+            <body>
+                <nav>
 
-            </nav>
-            <main>
-                {children}
-            </main>
-        </div>
+                </nav> 
+                <main>
+                    {children}
+                </main>
+            </body>
+        </html>
     );
 }
