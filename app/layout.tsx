@@ -2,7 +2,6 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import "@fortawesome/fontawesome-free/css/all.css";
 import "./globals.css";
 
 import { Inter } from "next/font/google";
