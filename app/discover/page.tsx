@@ -1,7 +1,12 @@
+import { Hero } from "@/components/layout/hero";
+
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Discover trails from database</h1>
-    </main>
-  )
+    <>
+      <Hero
+        title="Discover your next adventure"
+        description="blablabla"
+      />
+    </>
+  );
 }
