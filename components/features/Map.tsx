@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import type * as Leaflet from "leaflet";
 
 export default function Map() {
-  useEffect(() => {
-    let map: Leaflet.Map | null = null;
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const leafletMap = useRef<Leaflet.Map | null>(null);
 
+  useEffect(() => {
     async function initMap() {
+      if (!mapRef.current || leafletMap.current) return;
+
       const L: typeof Leaflet = await import("leaflet");
 
       const userIcon = L.divIcon({
@@ -22,7 +25,8 @@ export default function Map() {
         iconAnchor: [12, 24],
       });
 
-      map = L.map("map").setView([59.91, 10.75], 13);
+      const map = L.map(mapRef.current).setView([59.91, 10.75], 13);
+      leafletMap.current = map;
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "&copy; OpenStreetMap contributors",
@@ -47,13 +51,11 @@ export default function Map() {
           circle.setRadius(radius);
         } else {
           marker = L.marker(e.latlng, { icon: userIcon })
-            .addTo(map!)
+            .addTo(map)
             .bindPopup("Your location")
             .openPopup();
 
-          circle = L.circle(e.latlng, {
-            radius,
-          }).addTo(map!);
+          circle = L.circle(e.latlng, { radius }).addTo(map);
         }
       });
 
@@ -65,12 +67,13 @@ export default function Map() {
     initMap();
 
     return () => {
-      if (map) {
-        map.stopLocate();
-        map.remove();
+      if (leafletMap.current) {
+        leafletMap.current.stopLocate();
+        leafletMap.current.remove();
+        leafletMap.current = null;
       }
     };
   }, []);
 
-  return <div id="map" className="w-full h-screen"></div>;
+  return <div ref={mapRef} className="w-full h-screen" />;
 }
