@@ -1,55 +1,76 @@
 "use client";
 
-import { useEffect } from "react"
-import L from "leaflet"
-import "leaflet/dist/leaflet.css"
+import { useEffect } from "react";
+import "leaflet/dist/leaflet.css";
+import type * as Leaflet from "leaflet";
 
 export default function Map() {
   useEffect(() => {
-    const map = L.map("map").setView([59.91, 10.75], 13)
+    let map: Leaflet.Map | null = null;
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(map)
+    async function initMap() {
+      const L: typeof Leaflet = await import("leaflet");
 
-    let marker: L.Marker<any>
-    let circle: L.Circle<any>
+      const userIcon = L.divIcon({
+        html: `
+          <div class="flex items-center justify-center text-red-600 text-2xl">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+        `,
+        className: "",
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+      });
 
-    map.locate({
-      watch: true,
-      setView: true,
-      maxZoom: 16,
-      enableHighAccuracy: true,
-    })
+      map = L.map("map").setView([59.91, 10.75], 13);
 
-    map.on("locationfound", (e) => {
-      const radius = e.accuracy
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
 
-      if (marker) {
-        marker.setLatLng(e.latlng)
-        circle.setLatLng(e.latlng)
-        circle.setRadius(radius)
-      } else {
-        marker = L.marker(e.latlng)
-          .addTo(map)
-          .bindPopup("Your location")
-          .openPopup()
+      let marker: Leaflet.Marker | null = null;
+      let circle: Leaflet.Circle | null = null;
 
-        circle = L.circle(e.latlng, {
-          radius: radius,
-        }).addTo(map)
-      }
-    })
+      map.locate({
+        watch: true,
+        setView: true,
+        maxZoom: 16,
+        enableHighAccuracy: true,
+      });
 
-    map.on("locationerror", (e) => {
-      console.log("Location error:", e.message)
-    })
+      map.on("locationfound", (e: Leaflet.LocationEvent) => {
+        const radius = e.accuracy;
+
+        if (marker && circle) {
+          marker.setLatLng(e.latlng);
+          circle.setLatLng(e.latlng);
+          circle.setRadius(radius);
+        } else {
+          marker = L.marker(e.latlng, { icon: userIcon })
+            .addTo(map!)
+            .bindPopup("Your location")
+            .openPopup();
+
+          circle = L.circle(e.latlng, {
+            radius,
+          }).addTo(map!);
+        }
+      });
+
+      map.on("locationerror", (e: Leaflet.ErrorEvent) => {
+        console.log("Location error:", e.message);
+      });
+    }
+
+    initMap();
 
     return () => {
-      map.stopLocate()
-      map.remove()
-    }
-  }, [])
+      if (map) {
+        map.stopLocate();
+        map.remove();
+      }
+    };
+  }, []);
 
-  return <div id="map" className="w-full h-screen"></div>
+  return <div id="map" className="w-full h-screen"></div>;
 }
