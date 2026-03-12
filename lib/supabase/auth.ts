@@ -14,7 +14,32 @@ export async function login(email: string, password: string) {
     password,
   });
 
-  return { data, error };
+  if (error) return { data: null, error };
+
+  const user = data.user;
+
+  if (!user) return { data, error: null };
+
+  // hent rolle fra users table
+  const { data: userData, error: roleError } = await supabase
+    .from("users")
+    .select("role")
+    .eq("user_id", user.id)
+    .single();
+
+  if (roleError) return { data, error: roleError };
+
+  const role = userData?.role;
+
+  // redirect basert på rolle
+  if (typeof window !== "undefined") {
+    if (role === "admin") {
+      window.location.href = "/admin";
+    } else {
+      window.location.href = "/";
+    }
+  }
+  return { data, error: null };
 }
 
 /* REGISTER */
@@ -94,6 +119,10 @@ export async function logout() {
   const supabase = getSupabase();
 
   const { error } = await supabase.auth.signOut();
+
+  if (!error && typeof window !== "undefined") {
+    window.location.href = "/";
+  }
 
   return { error };
 }
