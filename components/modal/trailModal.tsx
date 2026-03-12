@@ -1,10 +1,9 @@
 "use client";
-
 import { GlobalModal } from "./globalModal";
 
 type Trail = {
-  id: string;
-  title: string;
+  trail_id: string;
+  name: string;
   description?: string;
 };
 
@@ -21,11 +20,11 @@ export function TrailModal({ open, onClose, trail }: Props) {
     <GlobalModal open={open} onClose={onClose}>
 
       <h2 className="text-lg font-semibold mb-2">
-        {trail.title}
+        {trail.name}
       </h2>
 
       {trail.description && (
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           {trail.description}
         </p>
       )}
