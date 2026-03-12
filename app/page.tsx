@@ -1,7 +1,16 @@
+import { Hero } from "@/components/layout/hero";
+
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Public landingpage</h1>
-    </main>
-  )
+    <>
+      <Hero
+        title="Landingpage"
+        description="Text"
+        actions={[
+          { label: "Discover page", href: "/discover" },
+          { label: "Map page", href: "/map", variant: "outline" },
+        ]}
+      />
+    </>
+  );
 }
