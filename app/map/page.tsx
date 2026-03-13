@@ -1,9 +1,5 @@
-import Map from "@/components/features/Map";
+import MapClient from "@/components/features/map/MapClient";
 
 export default function Page() {
-  return (
-    <>
-      <Map />
-    </>
-  );
+  return <MapClient />;
 }
