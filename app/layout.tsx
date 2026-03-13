@@ -1,7 +1,6 @@
 //denne er ikke ferdigstilt, fortsett senere. Per nå er den samme som i 
 "use client";
 
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 import { Inter } from "next/font/google";
