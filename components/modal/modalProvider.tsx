@@ -1,5 +1,4 @@
 "use client";
-
 import { createContext, useContext, useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -11,8 +10,8 @@ import { PasswordModal } from "./passwordModal";
 type ModalType = "login" | "register" | "trail" | "resetPassword" | null;
 
 type Trail = {
-  id: string;
-  title: string;
+  trail_id: string;
+  name: string;
   description?: string;
 };
 
