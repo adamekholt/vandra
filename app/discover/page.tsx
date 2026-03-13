@@ -56,8 +56,8 @@ export default function Page() {
               className="cursor-pointer hover:shadow-lg transition"
               onClick={() =>
                 openTrailModal({
-                  id: trail.trail_id,
-                  title: trail.name ?? "Unnamed trail",
+                  trail_id: trail.trail_id,
+                  name: trail.name ?? "Unnamed trail",
                   description: " "
                 })
               }
