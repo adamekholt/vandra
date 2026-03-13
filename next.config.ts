@@ -5,8 +5,8 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: `
       default-src 'self';
-      img-src 'self' data: blob: https://*.tile.openstreetmap.org;
-      connect-src 'self' https://*.supabase.co;
+      img-src 'self' data: blob: https://*.tile.openstreetmap.org https://api.maptiler.com https://*.maptiler.com;
+      connect-src 'self' https://*.supabase.co https://api.maptiler.com https://*.maptiler.com;
       script-src 'self' 'unsafe-inline' 'unsafe-eval';
       style-src 'self' 'unsafe-inline';
       font-src 'self';
