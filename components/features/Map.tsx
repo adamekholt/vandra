@@ -12,6 +12,7 @@ import TopoLayer from "./map/layers/TopoLayer";
 import TrailMarkers from "./map/TrailMarkers";
 import UserLocation from "./map/UserLocation";
 import Tracker from "./map/Tracker";
+import TrailLayer from "./map/layers/TrailLayer";
 
 const { BaseLayer } = LayersControl;
 
@@ -40,6 +41,7 @@ export default function Map() {
       </LayersControl>
 
       <TrailMarkers />
+      <TrailLayer />
       <UserLocation />
       <Tracker />
 
