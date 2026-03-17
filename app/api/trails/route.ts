@@ -6,8 +6,7 @@ export async function GET() {
 
     const { data, error } = await supabase
       .from("trails")
-      .select("trail_id, name, geo, created_at")
-      .order("created_at", { ascending: false })
+      .select("trail_id, name, geo")
 
     if (error) {
       return Response.json(
@@ -16,7 +15,19 @@ export async function GET() {
       )
     }
 
-    return Response.json({ trails: data })
+    const geojson = {
+      type: "FeatureCollection",
+      features: data.map((trail) => ({
+        type: "Feature",
+        geometry: trail.geo,
+        properties: {
+          id: trail.trail_id,
+          name: trail.name
+        }
+      }))
+    }
+
+    return Response.json(geojson)
 
   } catch (err) {
     return Response.json(
