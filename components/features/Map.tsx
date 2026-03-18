@@ -5,7 +5,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 import { MapContainer, LayersControl } from "react-leaflet";
-
+import { useState } from "react";
 import OutdoorLayer from "./map/layers/OutdoorLayer";
 import SatelliteLayer from "./map/layers/SatelliteLayer";
 import TopoLayer from "./map/layers/TopoLayer";
@@ -17,6 +17,7 @@ import TrailLayer from "./map/layers/TrailLayer";
 const { BaseLayer } = LayersControl;
 
 export default function Map() {
+  const [selectedTrailId, setSelectedTrailId] = useState<string | null>(null);
   return (
     <MapContainer
       center={[59.91, 10.75]}
@@ -40,8 +41,8 @@ export default function Map() {
 
       </LayersControl>
 
-      <TrailMarkers />
-      <TrailLayer />
+      <TrailMarkers onSelectTrail={setSelectedTrailId} />
+      <TrailLayer selectedTrailId={selectedTrailId} />
       <UserLocation />
       <Tracker />
 
