@@ -6,6 +6,7 @@ import L from "leaflet";
 import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import { getTrailIcon } from "@/lib/map/luciedeIcons";
 
 type Props = {
   onSelectTrail: (id: string | null) => void;
@@ -26,7 +27,9 @@ export default function TrailMarkers({ onSelectTrail }: Props) {
         const lat = coords[1];
         const lng = coords[0];
 
-          const marker = L.marker([lat, lng]);
+          const marker = L.marker([lat, lng], {
+            icon: getTrailIcon(f.properties.typ),
+          });
 
           marker.bindPopup(f.properties.name);
 
@@ -38,7 +41,7 @@ export default function TrailMarkers({ onSelectTrail }: Props) {
             onSelectTrail(null);
           });
 
-          markerCluster.addLayer(marker);
+          marker.addTo(map);
         });
 
         map.addLayer(markerCluster);

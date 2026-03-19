@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
+import { Button } from "@/components/ui/button"
 
 import {
   Table,
@@ -59,9 +60,9 @@ export default function AdminTrailTable() {
   return (
     <div className="p-8">
 
-      <h1 className="text-2xl font-bold mb-6">
-        Trails
-      </h1>
+      <Button onClick={() => router.push("/admin/table/new")}>
+        New trail
+      </Button>
 
       <Table>
 
