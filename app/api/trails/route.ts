@@ -1,38 +1,85 @@
-import { createClient } from "@/lib/supabase/server"
+// import { createClient } from "@/lib/supabase/server"
+
+// export async function GET() {
+//   try {
+//     const supabase = await createClient()
+
+//     const { data, error } = await supabase
+//       .from("trails")
+//       .select("trail_id, name, geo")
+
+//     if (error) {
+//       return Response.json(
+//         { error: error.message },
+//         { status: 500 }
+//       )
+//     }
+
+//     const geojson = {
+//       type: "FeatureCollection",
+//       features: data.map((trail) => ({
+//         type: "Feature",
+//         geometry: trail.geo,
+//         properties: {
+//           id: trail.trail_id,
+//           name: trail.name
+//         }
+//       }))
+//     }
+
+//     return Response.json(geojson)
+
+//   } catch (err) {
+//     return Response.json(
+//       { error: "Server error" },
+//       { status: 500 }
+//     )
+//   }
+// }
+
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET() {
   try {
-    const supabase = await createClient()
+    const supabase = await createClient();
 
     const { data, error } = await supabase
       .from("trails")
-      .select("trail_id, name, geo")
+      .select("trail_id, name, geo, start_point");
 
     if (error) {
       return Response.json(
         { error: error.message },
         { status: 500 }
-      )
+      );
     }
 
     const geojson = {
       type: "FeatureCollection",
-      features: data.map((trail) => ({
-        type: "Feature",
-        geometry: trail.geo,
-        properties: {
-          id: trail.trail_id,
-          name: trail.name
-        }
-      }))
-    }
+      features: data.map((trail) => {
+        const parsed =
+          typeof trail.geo === "string"
+            ? JSON.parse(trail.geo)
+            : trail.geo;
 
-    return Response.json(geojson)
+        return {
+          type: "Feature",
+          geometry: parsed.geometry,
+          properties: {
+            id: trail.trail_id,
+            name: trail.name,
+            start_point: trail.start_point,
+          },
+        };
+      }),
+    };
+
+    return Response.json(geojson);
 
   } catch (err) {
     return Response.json(
       { error: "Server error" },
       { status: 500 }
-    )
+    );
   }
 }
