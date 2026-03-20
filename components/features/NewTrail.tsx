@@ -12,7 +12,6 @@ import DrawHandler from "./map/newtrail/DrawHandler";
 import DrawMarkers from "./map/newtrail/DrawMarkers";
 import DrawPolyline from "./map/newtrail/DrawPolyline";
 import DrawDistance from "./map/newtrail/DrawDistance";
-import TrailMarkers from "./map/TrailMarkers";
 import TrailForm from "./TrailForm";
 import { totalDistance } from "@/lib/map/distance";
 
@@ -52,9 +51,6 @@ export default function NewTrail() {
             <OutdoorLayer />
           </BaseLayer>
         </LayersControl>
-        <TrailMarkers onSelectTrail={(id) => {
-          console.log("selected trail:", id);
-        }} />
         <DrawHandler onAdd={(p) => setPoints((prev) => [...prev, p])} />
         <DrawMarkers points={points} />
         <DrawPolyline points={points} />
