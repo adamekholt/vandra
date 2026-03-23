@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import SearchInput from "./filters/SearchInput";
 import FiltersPanel from "./filters/FilterPanel";
 
 export default function MapController() {
