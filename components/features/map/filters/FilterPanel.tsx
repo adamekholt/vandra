@@ -21,9 +21,10 @@ export default function FiltersPanel() {
     setDraftLengthRange,
     applyFilters,
     resetFilters,
+    trails,
   } = useMapStore();
 
-  const { trails, loading } = useTrails();
+  const { loading } = useTrails();
 
   if (loading) return null;
 
