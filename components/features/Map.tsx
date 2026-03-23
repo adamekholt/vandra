@@ -10,17 +10,20 @@ import TrailMarkers from "./map/TrailMarkers";
 import UserLocation from "./map/UserLocation";
 import Tracker from "./map/Tracker";
 import TrailLayer from "./map/layers/TrailLayer";
+import MapController from "./map/MapController";
+import SearchInput from "./map/filters/SearchInput";
 
 const { BaseLayer } = LayersControl;
 
 export default function Map() {
   const [selectedTrailId, setSelectedTrailId] = useState<string | null>(null);
   return (
+    <div className="relative h-[calc(100vh-64px)] w-full">
     <MapContainer
-      center={[59.91, 10.75]}
-      zoom={10}
+      center={[62, 15]}
+      zoom={4}
       scrollWheelZoom
-      style={{ height: "100vh", width: "100%" }}
+      className="h-full w-full"
     >
       <LayersControl position="topright">
 
@@ -44,5 +47,8 @@ export default function Map() {
       <Tracker />
 
     </MapContainer>
+    <SearchInput />
+    <MapController />
+    </div>
   );
 }
