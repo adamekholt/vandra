@@ -62,9 +62,14 @@ export async function GET() {
             ? JSON.parse(trail.geo)
             : trail.geo;
 
+        const geometry =
+          parsed.type === "Feature"
+            ? parsed.geometry
+            : parsed;
+
         return {
           type: "Feature",
-          geometry: parsed.geometry,
+          geometry,
           properties: {
             id: trail.trail_id,
             name: trail.name,
