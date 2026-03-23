@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useMapStore } from "@/store/useMapStore";
 
 export function useTrails() {
-  const [trails, setTrails] = useState<any[]>([]);
+  const setTrails = useMapStore((s) => s.setTrails);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient(); // 👈 FIX
+    const supabase = createClient();
 
     async function fetchTrails() {
       const { data, error } = await supabase
@@ -33,7 +34,7 @@ export function useTrails() {
     }
 
     fetchTrails();
-  }, []);
+  }, [setTrails]);
 
-  return { trails, loading };
+  return { loading };
 }

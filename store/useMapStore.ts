@@ -10,6 +10,11 @@ type MapState = {
   draftFilters: string[];
   draftLengthRange: LengthRange;
 
+  trails: any[];
+  filteredTrails: any[];
+
+  setTrails: (trails: any[]) => void;
+
   setSearch: (s: string) => void;
 
   toggleDraftFilter: (f: string) => void;
@@ -27,6 +32,15 @@ export const useMapStore = create<MapState>((set, get) => ({
   draftFilters: [],
   draftLengthRange: null,
 
+  trails: [],
+  filteredTrails: [],
+
+  setTrails: (trails) =>
+    set({
+      trails,
+      filteredTrails: trails,
+    }),
+
   setSearch: (search) => set({ search }),
 
   toggleDraftFilter: (filter) =>
@@ -39,17 +53,43 @@ export const useMapStore = create<MapState>((set, get) => ({
   setDraftLengthRange: (lengthRange) =>
     set({ draftLengthRange: lengthRange }),
 
-  applyFilters: () =>
-    set((state) => ({
-      filters: state.draftFilters,
-      lengthRange: state.draftLengthRange,
-    })),
+  applyFilters: () => {
+    const { trails, draftFilters, draftLengthRange, search } = get();
 
-  resetFilters: () =>
+    const filtered = trails.filter((t) => {
+      const matchesType =
+        draftFilters.length === 0 ||
+        draftFilters.includes(t.type);
+
+      const matchesLength =
+        !draftLengthRange ||
+        (t.length_m >= draftLengthRange[0] &&
+          (draftLengthRange[1] === null ||
+            t.length_m <= draftLengthRange[1]));
+
+      const matchesSearch =
+        !search ||
+        t.name.toLowerCase().includes(search.toLowerCase());
+
+      return matchesType && matchesLength && matchesSearch;
+    });
+
+    set({
+      filters: draftFilters,
+      lengthRange: draftLengthRange,
+      filteredTrails: filtered,
+    });
+  },
+
+  resetFilters: () => {
+    const { trails } = get();
+
     set({
       draftFilters: [],
       draftLengthRange: null,
       filters: [],
       lengthRange: null,
-    }),
+      filteredTrails: trails,
+    });
+  },
 }));
