@@ -2,14 +2,21 @@
 "use client";
 
 import "./globals.css";
-
-import { Inter } from "next/font/google";
+import { DM_Sans, Fraunces } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 import { Navbar } from "@/components/layout/navbar";
 import { ModalProvider } from "@/components/modal/modalProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const fontSans = DM_Sans({
+    subsets: ["latin"],
+    variable: "--font-sans",
+});
+
+const fontHeading = Fraunces({
+    subsets: ["latin"],
+    variable: "--font-heading",
+});
 
 export default function RootLayout({
     children,
@@ -17,11 +24,11 @@ export default function RootLayout({
     children: React.ReactNode;
     }) {
     return (
-        <html className={cn("font-sans", inter.variable)}>
+        <html className={cn(fontSans.variable, fontHeading.variable)}>
             <body className="w-full min-h-screen flex flex-col">
                 <ModalProvider>
-                    <Navbar />
                     <main>{children}</main>
+                    <Navbar />
                 </ModalProvider>
             </body>
         </html>
