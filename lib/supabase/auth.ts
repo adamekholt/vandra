@@ -34,15 +34,13 @@ export async function login(email: string, password: string) {
   // redirect basert på rolle
   if (typeof window !== "undefined") {
     if (role === "admin") {
-      window.location.href = "/admin";
+      window.location.href = "/";
     } else {
       window.location.href = "/";
     }
   }
   return { data, error: null };
 }
-
-/* REGISTER */
 
 export async function register(
   email: string,
@@ -86,8 +84,6 @@ export async function register(
   return { data, error: null };
 }
 
-/* REQUEST PASSWORD RESET EMAIL */
-
 export async function resetPassword(email: string) {
   const supabase = getSupabase();
 
@@ -101,8 +97,6 @@ export async function resetPassword(email: string) {
   });
 }
 
-/* UPDATE PASSWORD AFTER EMAIL LINK */
-
 export async function updatePassword(password: string) {
   const supabase = getSupabase();
 
@@ -112,8 +106,6 @@ export async function updatePassword(password: string) {
 
   return { data, error };
 }
-
-/* LOGOUT */
 
 export async function logout() {
   const supabase = getSupabase();
