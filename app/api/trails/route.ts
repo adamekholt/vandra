@@ -45,7 +45,7 @@ export async function GET() {
 
     const { data, error } = await supabase
       .from("trails")
-      .select("trail_id, name, geo, start_point");
+      .select("trail_id, name, region, geo, start_point, type, description, length_km");
 
     if (error) {
       return Response.json(
@@ -62,13 +62,21 @@ export async function GET() {
             ? JSON.parse(trail.geo)
             : trail.geo;
 
+        const geometry =
+          parsed.type === "Feature"
+            ? parsed.geometry
+            : parsed;
+
         return {
           type: "Feature",
-          geometry: parsed.geometry,
+          geometry,
           properties: {
             id: trail.trail_id,
             name: trail.name,
-            start_point: trail.start_point,
+            region: trail.region,
+            description: trail.description,
+            length_km: trail.length_km,
+            type: trail.type
           },
         };
       }),

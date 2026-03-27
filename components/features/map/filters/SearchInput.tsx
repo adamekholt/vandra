@@ -6,16 +6,17 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 export default function SearchInput() {
-  const { setSearch } = useMapStore();
+  const { setSearch, applyFilters } = useMapStore();
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => {
       setSearch(value);
+      applyFilters();
     }, 300);
 
     return () => clearTimeout(t);
-  }, [value, setSearch]);
+  }, [value, setSearch, applyFilters]);
 
   return (
     <div className="absolute top-30 left-0 w-full z-[1000]
@@ -35,6 +36,7 @@ export default function SearchInput() {
             onClick={() => {
               setValue("");
               setSearch("");
+              applyFilters();
             }}
             className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
           >

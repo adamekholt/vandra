@@ -8,7 +8,6 @@ import SatelliteLayer from "./map/layers/SatelliteLayer";
 import TopoLayer from "./map/layers/TopoLayer";
 import TrailMarkers from "./map/TrailMarkers";
 import UserLocation from "./map/UserLocation";
-import Tracker from "./map/Tracker";
 import TrailLayer from "./map/layers/TrailLayer";
 import MapController from "./map/MapController";
 import SearchInput from "./map/filters/SearchInput";
@@ -44,7 +43,6 @@ export default function Map() {
       <TrailMarkers onSelectTrail={setSelectedTrailId} />
       <TrailLayer selectedTrailId={selectedTrailId} />
       <UserLocation />
-      <Tracker />
 
     </MapContainer>
     <SearchInput />
