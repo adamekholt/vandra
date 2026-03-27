@@ -34,7 +34,7 @@ export async function login(email: string, password: string) {
   // redirect basert på rolle
   if (typeof window !== "undefined") {
     if (role === "admin") {
-      window.location.href = "/admin";
+      window.location.href = "/";
     } else {
       window.location.href = "/";
     }

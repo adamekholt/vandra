@@ -7,8 +7,8 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   const supabase = await createClient()
-
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
+  const user = session?.user
 
   // ikke logget inn
   if (!user) {redirect("/")}
@@ -23,5 +23,6 @@ export default async function AdminLayout({
   if (error || profile?.role !== "admin") {
     redirect("/")
   }
-  return children
+  
+  return <>{children}</>;
 }

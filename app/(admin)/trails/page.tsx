@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
-import { createClient } from "@/lib/supabase/client"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 import {
   Table,
@@ -12,60 +12,53 @@ import {
   TableHead,
   TableRow,
   TableCell,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-const supabase = createClient()
+const supabase = createClient();
 
 type Trail = {
-  trail_id: string
-  name: string | null
-  user_id: string | null
-  created_at: string
-}
+  trail_id: string;
+  name: string | null;
+  user_id: string | null;
+  created_at: string;
+};
 
 export default function AdminTrailTable() {
-  const router = useRouter()
+  const router = useRouter();
 
-  const [trails, setTrails] = useState<Trail[]>([])
-  const [loading, setLoading] = useState(true)
+  const [trails, setTrails] = useState<Trail[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
-
-      const { data: sessionData } = await supabase.auth.getSession()
-      const session = sessionData.session
-
-      if (!session) {
-        router.push("/admin")
-        return
-      }
-
       const { data, error } = await supabase
         .from("trails")
-        .select("*")
-        .order("created_at", { ascending: false })
+        .select("trail_id, name, user_id, created_at")
+        .order("created_at", { ascending: false });
 
-      console.log(data, error)
+      if (error) {
+        console.error(error);
+        return;
+      }
 
-      if (data) setTrails(data)
+      if (data) setTrails(data);
 
-      setLoading(false)
+      setLoading(false);
     }
 
-    loadData()
-  }, [router])
+    loadData();
+  }, []);
 
-  if (loading) return <div className="p-8">Loading trails...</div>
+  if (loading) return <div className="p-8">Loading trails...</div>;
 
   return (
-    <div className="p-8">
+    <div className="p-8 space-y-4">
 
-      <Button onClick={() => router.push("/admin/table/new")}>
+      <Button onClick={() => router.push("/trails/new")}>
         New trail
       </Button>
 
       <Table>
-
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
@@ -81,7 +74,7 @@ export default function AdminTrailTable() {
               key={trail.trail_id}
               className="cursor-pointer"
               onClick={() =>
-                router.push(`/admin/table/${trail.trail_id}`)
+                router.push(`/trails/${trail.trail_id}`)
               }
             >
               <TableCell>{trail.name ?? "Unnamed"}</TableCell>
@@ -93,9 +86,8 @@ export default function AdminTrailTable() {
             </TableRow>
           ))}
         </TableBody>
-
       </Table>
 
     </div>
-  )
+  );
 }
