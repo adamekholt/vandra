@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useMapStore } from "@/store/useMapStore";
 import { Input } from "@/components/ui/input";
@@ -20,8 +19,9 @@ export default function SearchInput() {
   }, [value, setSearch, applyFilters]);
 
   return (
-    <div className="absolute top-30 left-0 w-full z-[1000] flex justify-center px-4">
-      <div className="relative w-full max-w-md">
+    <div className="absolute top-30 left-0 w-full z-[1000]
+  flex justify-center px-4">
+      <div className=" relative w-80 max-w-md">
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}

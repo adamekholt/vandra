@@ -4,8 +4,6 @@
 import "./globals.css";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-import { Navbar } from "@/components/layout/navbar";
 import { ModalProvider } from "@/components/modal/modalProvider";
 
 const fontSans = DM_Sans({
@@ -25,10 +23,9 @@ export default function RootLayout({
     }) {
     return (
         <html className={cn(fontSans.variable, fontHeading.variable)}>
-            <body className="w-full min-h-screen flex flex-col">
+            <body className="w-full min-h-screen bg-background flex flex-col">
                 <ModalProvider>
                     <main>{children}</main>
-                    <Navbar />
                 </ModalProvider>
             </body>
         </html>
