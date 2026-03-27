@@ -6,7 +6,7 @@ export async function GET() {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-      return Response.json({ error: "Unauthorized" }, { status: 401 })
+      return Response.json({ user: null });
     }
 
     const { data: profile, error } = await supabase
@@ -16,15 +16,20 @@ export async function GET() {
       .single()
 
     if (error || !profile) {
-      return Response.json({ error: "User not found" }, { status: 404 })
+      return Response.json({ user: null })
     }
 
-    return Response.json({ user: profile })
+    return Response.json({
+      user: {
+        id: profile.user_id,
+        email: profile.email,
+        role: profile.role,
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+      },
+    });
 
   } catch {
-    return Response.json(
-      { error: "Server error" },
-      { status: 500 }
-    )
+    return Response.json({ user: null })  
   }
 }

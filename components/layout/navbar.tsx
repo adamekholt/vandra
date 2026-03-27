@@ -1,52 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { logout } from "@/lib/supabase/auth";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useModal } from "@/components/modal/modalProvider";
 import { Bookmark, MapPin, Plus, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const supabase = createClient();
+import { useUser } from "@/hooks/useUser";
 
 export function Navbar() {
   const pathname = usePathname();
-  const params = useSearchParams();
-  const isAdminMode = params.get("mode") === "admin";
   const { openModal } = useModal();
-  const [user, setUser] = useState<any>(null);
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
-    };
-
-    getUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const { user, role, loading } = useUser();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await logout();
-    setUser(null);
+    router.refresh();
   };
+
+  if (loading) return null;
+
+  const isAdmin = role === "admin";
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 border-t bg-background px-6 py-2">
       <div className="flex items-center justify-around">
+
+    {!isAdmin && (
+      <>
         <Link href="/map" className="flex flex-col items-center gap-1">
           <div
             className={cn(
               "flex items-center justify-center rounded-full px-3 py-2",
-              pathname === "/map" && !isAdminMode && "bg-secondary"
+              pathname === "/map" && "bg-secondary"
             )}
           >
             <MapPin className="size-5" />
@@ -58,26 +46,42 @@ export function Navbar() {
           <div
             className={cn(
               "flex items-center justify-center rounded-full px-3 py-2",
-              pathname === "/saved" && !isAdminMode && "bg-secondary"
+              pathname === "/saved" && "bg-secondary"
             )}
           >
             <Bookmark className="size-5" />
           </div>
           <span className="text-xs">Lagrade</span>
         </Link>
+      </>
+    )}
 
-        {user && (
-          <Link href="/admin/table/new" className="flex flex-col items-center gap-1">
+        {isAdmin && (
+          <>
+            <Link href="/trails" className="flex flex-col items-center gap-1">
+              <div
+                className={cn(
+                  "flex items-center justify-center rounded-full px-3 py-2",
+                  pathname === "/trails" && "bg-secondary"
+                )}
+              >
+                <MapPin className="size-5" />
+              </div>
+              <span className="text-xs">Visa alla</span>
+            </Link>
+
+          <Link href="/trails/new" className="flex flex-col items-center gap-1">
             <div
               className={cn(
                 "flex items-center justify-center rounded-full px-3 py-2",
-                pathname === "/admin/table/new" && isAdminMode && "bg-secondary"
+                pathname === "/trails/new" && "bg-secondary"
               )}
             >
               <Plus className="size-5" />
             </div>
             <span className="text-xs">Ny led</span>
           </Link>
+        </>
         )}
 
         <div className="flex flex-col items-center gap-1">
