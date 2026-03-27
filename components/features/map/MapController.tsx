@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import SearchInput from "./filters/SearchInput";
 import FiltersPanel from "./filters/FilterPanel";
+import { useMapStore } from "@/store/useMapStore";
 
 export default function MapController() {
   const [mode, setMode] = useState<"closed" | "filters" | "list">("closed");
+  const trails = useMapStore((s) => s.filteredTrails);
 
   const isOpen = mode !== "closed";
 
@@ -64,15 +65,24 @@ export default function MapController() {
 
                 {mode === "list" && (
                   <div className="space-y-3">
-                    <div className="p-3 border rounded-lg">
-                      Trail 1
-                    </div>
-                    <div className="p-3 border rounded-lg">
-                      Trail 2
-                    </div>
-                    <div className="p-3 border rounded-lg">
-                      Trail 3
-                    </div>
+                    {trails.length === 0 && (
+                      <div className="text-sm text-muted-foreground">
+                        No results
+                      </div>
+                    )}
+
+                    {trails.map((trail) => (
+                      <div
+                        key={trail.trail_id}
+                        className="p-3 border rounded-lg cursor-pointer hover:bg-muted"
+                      >
+                        <div className="font-medium">{trail.name}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {trail.type} •{" "}
+                          {(trail.length_m / 1000).toFixed(1)} km
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
