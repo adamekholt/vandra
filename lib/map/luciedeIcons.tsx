@@ -46,12 +46,10 @@ export function userIcon(): DivIcon {
   });
 }
 
-// 🎯 bruk union type (ikke string!)
-export type TrailType = "footway" | "track" | "path" | "other";
 
-export function getTrailIcon(type: TrailType): DivIcon {
+export function getTrailIcon(type: string): DivIcon {
   switch (type) {
-    case "footway":
+    case "vandring":
       return trailIcon("green");
     case "track":
       return trailIcon("blue");
