@@ -10,11 +10,14 @@ import TrailMarkers from "./map/TrailMarkers";
 import UserLocation from "./map/UserLocation";
 import TrailLayer from "./map/layers/TrailLayer";
 import SearchInput from "./map/filters/SearchInput";
+import { useMapStore } from "@/store/useMapStore";
 
 const { BaseLayer } = LayersControl;
 
 export default function Map() {
-  const [selectedTrailId, setSelectedTrailId] = useState<string | null>(null);
+  const selectedTrailId = useMapStore((s) => s.selectedTrailId);
+  const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
+  
   return (
     <div className="h-full w-full">
     <MapContainer
@@ -38,7 +41,7 @@ export default function Map() {
       </LayersControl>
 
       <TrailMarkers onSelectTrail={setSelectedTrailId} />
-      <TrailLayer selectedTrailId={selectedTrailId} />
+      <TrailLayer />
       <UserLocation />
     </MapContainer>
     <SearchInput />
