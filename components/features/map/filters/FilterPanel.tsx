@@ -44,7 +44,7 @@ export default function FiltersPanel() {
             return (
               <Button
                 key={type}
-                variant={active ? "default" : "outline"}
+                variant={active ? "secondary" : "outline"}
                 size="sm"
                 onClick={() => toggleDraftFilter(type)}
               >
@@ -68,7 +68,7 @@ export default function FiltersPanel() {
             return (
               <Button
                 key={opt.label}
-                variant={active ? "default" : "outline"}
+                variant={active ? "secondary" : "outline"}
                 size="sm"
                 onClick={() =>
                   setDraftLengthRange(
@@ -89,7 +89,7 @@ export default function FiltersPanel() {
         </Button>
 
         <Button
-          variant="secondary"
+          variant="outline"
           className="flex-1"
           onClick={resetFilters}
         >
