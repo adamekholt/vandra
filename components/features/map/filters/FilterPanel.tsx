@@ -35,7 +35,7 @@ export default function FiltersPanel() {
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-sm font-semibold mb-2">Type</h3>
+        <h3 className="text-sm font-semibold mb-2">Aktivitet</h3>
 
         <div className="flex flex-wrap gap-2">
           {types.map((type) => {
@@ -56,7 +56,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Lengde</h3>
+        <h3 className="text-sm font-semibold mb-2">Längd</h3>
 
         <div className="flex flex-wrap gap-2">
           {lengthOptions.map((opt) => {
@@ -85,7 +85,7 @@ export default function FiltersPanel() {
 
       <div className="flex gap-2 pt-2">
         <Button className="flex-1" onClick={applyFilters}>
-          Oppdater kart
+          Uppdatera karta
         </Button>
 
         <Button
@@ -93,7 +93,7 @@ export default function FiltersPanel() {
           className="flex-1"
           onClick={resetFilters}
         >
-          Rens
+          Rensa
         </Button>
       </div>
     </div>

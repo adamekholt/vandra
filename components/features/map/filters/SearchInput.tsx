@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useMapStore } from "@/store/useMapStore";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, Search } from "lucide-react";
 
 export default function SearchInput() {
   const { setSearch, applyFilters } = useMapStore();
@@ -19,7 +19,7 @@ export default function SearchInput() {
   }, [value, setSearch, applyFilters]);
 
   return (
-    <div className="absolute top-30 left-0 w-full z-[1000]
+    <div className="absolute bottom-30 left-0 w-full z-[1000]
   flex justify-center px-4">
       <div className=" relative w-80 max-w-md">
         <Input
@@ -29,7 +29,7 @@ export default function SearchInput() {
           className="pr-10"
         />
 
-        {value && (
+        {value ? (
           <Button
             variant="ghost"
             size="icon"
@@ -38,10 +38,14 @@ export default function SearchInput() {
               setSearch("");
               applyFilters();
             }}
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+            className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8"
           >
             <X className="h-4 w-4" />
           </Button>
+        ) : (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+            <Search className="h-5 w-5" />
+          </div>
         )}
       </div>
     </div>
