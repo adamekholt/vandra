@@ -19,7 +19,7 @@ export function useTrails() {
           name,
           type,
           region,
-          length_m,
+          length_km,
           geo,
           start_point
         `);

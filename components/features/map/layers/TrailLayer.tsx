@@ -1,71 +1,30 @@
-// "use client";
-
-// import { GeoJSON } from "react-leaflet";
-// import { useEffect, useState } from "react";
-
-// export default function TrailLayer({
-//   selectedTrailId,
-// }: {
-//   selectedTrailId: string | null;
-// }) {
-
-//   const [data,setData] = useState<any>(null);
-
-//   useEffect(() => {
-//     fetch("/api/trails")
-//       .then((res) => res.json())
-//       .then(setData);
-//   }, []);
-
-//   if (!data || !selectedTrailId) return null;
-//   const filteredData = {
-//     ...data,
-//     features: data.features.filter(
-//       (f: any) => f.properties.id === selectedTrailId
-//     ),
-//   };
-
-//   return (
-//     <GeoJSON
-//       data={filteredData}
-//       style={{
-//         color: "#e27c00",
-//         weight: 3
-//       }}
-//     />
-//   );
-// }
-
 "use client";
 
 import { GeoJSON } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { useMapStore } from "@/store/useMapStore";
+import type { Trail } from "@/types/trail";
+import type { Geometry } from "geojson";
 
-export default function TrailLayer({
-  selectedTrailId,
-}: {
-  selectedTrailId: string | null;
-}) {
+export default function TrailLayer() {
+  const selectedTrailId = useMapStore((s) => s.selectedTrailId);
+  const trails = useMapStore((s) => s.filteredTrails);
 
-  const [data,setData] = useState<any>(null);
+  if (!selectedTrailId) return null;
 
-  useEffect(() => {
-    fetch("/api/trails")
-      .then((res) => res.json())
-      .then(setData);
-  }, []);
+  const trail = trails.find(
+    (t: Trail) => t.trail_id === selectedTrailId
+  );
 
-  if (!data || !selectedTrailId) return null;
-  const filteredData = {
-    ...data,
-    features: data.features.filter(
-      (f: any) => f.properties.id === selectedTrailId
-    ),
-  };
+  if (!trail || !trail.geo) return null;
+
+  const geometry: Geometry =
+    typeof trail.geo === "string"
+      ? JSON.parse(trail.geo)
+      : trail.geo;
 
   return (
     <GeoJSON
-      data={filteredData}
+      data={geometry}
       style={{
         color: "#e27c00",
         weight: 3

@@ -41,7 +41,7 @@ export default function TrailMarkers({ onSelectTrail }: Props) {
         const lng = coords[0];
 
           const marker = L.marker([lat, lng], {
-            icon: getTrailIcon(trail.typ),
+            icon: getTrailIcon(trail.type),
           });
 
           marker.bindPopup(trail.name);

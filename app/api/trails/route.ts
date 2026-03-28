@@ -30,7 +30,7 @@ export async function GET() {
 
         return {
           type: "Feature",
-          geometry: parsed,
+          geometry: geometry,
           properties: {
             id: trail.trail_id,
             name: trail.name,

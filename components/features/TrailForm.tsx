@@ -45,7 +45,7 @@ export default function TrailForm({
       geo,
       type,
       region,
-      length_m: distanceKm * 1000,
+      length_km: distanceKm,
       start_point
     });
 
