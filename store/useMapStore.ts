@@ -1,4 +1,10 @@
 import { create } from "zustand";
+import type { Trail } from "@/types/trail";
+
+type State = {
+  trails: Trail[];
+  filteredTrails: Trail[];
+};
 
 type LengthRange = [number, number | null] | null;
 
@@ -10,10 +16,13 @@ type MapState = {
   draftFilters: string[];
   draftLengthRange: LengthRange;
 
-  trails: any[];
-  filteredTrails: any[];
+  selectedTrailId: string | null;
+  setSelectedTrailId: (id: string | null) => void;
 
-  setTrails: (trails: any[]) => void;
+  trails: Trail[];
+  filteredTrails: Trail[];
+  setTrails: (trails: Trail[]) => void;
+  
 
   setSearch: (s: string) => void;
 
@@ -28,7 +37,8 @@ export const useMapStore = create<MapState>((set, get) => ({
   search: "",
   filters: [],
   lengthRange: null,
-
+  selectedTrailId: null,
+  setSelectedTrailId: (id) => set({ selectedTrailId: id }),
   draftFilters: [],
   draftLengthRange: null,
 
@@ -56,16 +66,16 @@ export const useMapStore = create<MapState>((set, get) => ({
   applyFilters: () => {
     const { trails, draftFilters, draftLengthRange, search } = get();
 
-    const filtered = trails.filter((t) => {
+    const filtered = trails.filter((t: Trail) => {
       const matchesType =
         draftFilters.length === 0 ||
-        draftFilters.includes(t.type);
+        draftFilters.includes(t.type ?? "");
 
       const matchesLength =
         !draftLengthRange ||
-        (t.length_m >= draftLengthRange[0] &&
+        (t.length_km >= draftLengthRange[0] &&
           (draftLengthRange[1] === null ||
-            t.length_m <= draftLengthRange[1]));
+            t.length_km <= draftLengthRange[1]));
 
       const matchesSearch =
         !search ||
