@@ -42,7 +42,7 @@ export const buttonVariants = cva(
         outline:
           "border-border bg-card text-foreground hover:bg-muted transition-colors",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/90 data-pressed:bg-secondary/90 [:active,[data-pressed]]:bg-secondary/80",
+          "border-transparent bg-accent text-accent-foreground hover:bg-secondary/90 ",
         filter:
         "rounded-full border-transparent bg-muted text-muted-foreground hover:bg-secondary",
         "filter-active":
