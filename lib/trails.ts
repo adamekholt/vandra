@@ -13,7 +13,7 @@ export async function saveTrail(geo: LineString, form: Form) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      geo,
+      geo: JSON.stringify(geo),
       ...form,
     }),
   });
