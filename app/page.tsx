@@ -1,29 +1,36 @@
-import { TrailCard, Trail } from "@/components/layout/TrailCard";
+import { TrailCard } from "@/components/layout/TrailCard";
 import { Navbar } from "@/components/layout/navbar";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import Link from "next/link";
+import type { TrailPreview } from "@/types/trail";
 
 export default function Page() {
 //midlertidig mockdata frem til bugfix av trails routen er gjennomført
-  const trails: Trail[] = [
+  const trails: TrailPreview[] = [
     {
-      id: "1",
-      title: "Njupeskär",
-      distance: "8 km",
-      image: "/images/image.jpg",
+      trail_id: "1",
+      name: "Njupeskär",
+      description: "En vacker led",
+      length_km: 8,
+      type: "Vandring",
+      region: "Dalarna",
     },
     {
-      id: "2",
-      title: "Fulufjället",
-      distance: "12 km",
-      image: "/images/image.jpg",
+      trail_id: "2",
+      name: "Fulufjället",
+      description: "Nationalpark",
+      length_km: 12,
+      type: "Vandring",
+      region: "Dalarna",
     },
     {
-      id: "3",
-      title: "Sonfjället",
-      distance: "6 km",
-      image: "/images/image.jpg",
+      trail_id: "3",
+      name: "Sonfjället",
+      description: "Fjällvandring",
+      length_km: 6,
+      type: "Vandring",
+      region: "Härjedalen",
     },
   ];
 
@@ -53,7 +60,7 @@ export default function Page() {
       <div>
         <div className="space-y-3">
           {nearby.map((trail) => (
-            <TrailCard key={trail.id} trail={trail} />
+            <TrailCard key={trail.trail_id} trail={trail} />
           ))}
         </div>
       </div>

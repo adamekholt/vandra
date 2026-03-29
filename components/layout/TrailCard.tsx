@@ -4,16 +4,10 @@ import { Card, CardPanel } from "@/components/ui/card";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { useModal } from "@/components/modal/modalProvider";
-
-export type Trail = {
-  id: string;
-  title: string;
-  distance: string;
-  image: string;
-};
+import type { TrailPreview } from "@/types/trail";
 
 type Props = {
-  trail: Trail;
+  trail: TrailPreview;
   variant?: "lg" | "sm";
 };
 
@@ -24,11 +18,7 @@ export function TrailCard({
   const { openTrailModal } = useModal();
 
   const handleClick = () => {
-    openTrailModal({
-      trail_id: trail.id,
-      name: trail.title,
-      description: "",
-    });
+    openTrailModal(trail);
   };
 
   if (variant === "lg") {
@@ -42,7 +32,7 @@ function TrailCardLg({
   trail,
   onClick,
 }: {
-  trail: Trail;
+  trail: TrailPreview;
   onClick: () => void;
 }) {
   return (
@@ -52,8 +42,8 @@ function TrailCardLg({
     >
       <div className="relative">
         <Image
-          src={trail.image}
-          alt={trail.title}
+          src="/images/image.jpg"
+          alt={trail.name}
           width={600}
           height={400}
           className="h-64 w-full object-cover"
@@ -67,8 +57,8 @@ function TrailCardLg({
         </div>
 
         <div className="absolute bottom-4 left-4 text-white">
-          <h2 className="font-heading text-xl">{trail.title}</h2>
-          <p className="text-sm opacity-90">{trail.distance}</p>
+          <h2 className="font-heading text-xl">{trail.name}</h2>
+          <p className="text-sm opacity-90">{trail.length_km} km</p>
         </div>
       </div>
     </Card>
@@ -79,7 +69,7 @@ function TrailCardSm({
   trail,
   onClick,
 }: {
-  trail: Trail;
+  trail: TrailPreview;
   onClick: () => void;
 }) {
   return (
@@ -87,21 +77,18 @@ function TrailCardSm({
       onClick={onClick}
       className="flex-row items-stretch overflow-hidden cursor-pointer transition active:scale-[0.98] hover:opacity-90"
     >
-      {/* TEXT */}
       <CardPanel className="flex flex-1 flex-col justify-center p-4">
-        <p className="font-medium">
-          {trail.title}
-        </p>
+        <p className="font-medium">{trail.name}</p>
 
         <p className="text-sm text-muted-foreground">
-          {trail.distance}
+          {trail.length_km} km
         </p>
       </CardPanel>
 
       <div>
         <Image
-          src={trail.image}
-          alt={trail.title}
+          src="/images/image.jpg"
+          alt={trail.name}
           width={80}
           height={80}
           className="object-cover"

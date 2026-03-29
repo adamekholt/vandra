@@ -1,40 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useMapStore } from "@/store/useMapStore";
+import type { Trail } from "@/types/trail";
 
 export function useTrails() {
   const setTrails = useMapStore((s) => s.setTrails);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient();
+    const load = async () => {
+      try {
+        const res = await fetch("/api/trails");
+        const data: Trail[] = await res.json();
 
-    async function fetchTrails() {
-      const { data, error } = await supabase
-        .from("trails")
-        .select(`
-          trail_id,
-          name,
-          type,
-          region,
-          length_km,
-          geo,
-          description,
-          start_point
-        `);
-
-      if (error) {
-        console.error(error);
-      } else {
-        setTrails(data || []);
+        setTrails(data);
+      } catch {
+        setTrails([]);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setLoading(false);
-    }
-
-    fetchTrails();
+    load();
   }, [setTrails]);
 
   return { loading };
