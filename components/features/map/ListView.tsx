@@ -46,12 +46,7 @@ export default function ListView() {
               >
                 <TrailCard
                   variant="sm"
-                  trail={{
-                    id: trail.trail_id,
-                    title: trail.name,
-                    distance: `${trail.length_km?.toFixed(1)} km`,
-                    image: "/images/image.jpg",
-                  }}
+                  trail={trail}
                 />
               </div>
             );
