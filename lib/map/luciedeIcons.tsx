@@ -49,12 +49,8 @@ export function userIcon(): DivIcon {
 
 export function getTrailIcon(type: string): DivIcon {
   switch (type) {
-    case "vandring":
+    case "Vandring":
       return trailIcon("green");
-    case "track":
-      return trailIcon("blue");
-    case "path":
-      return trailIcon("brown");
     default:
       return trailIcon("gray");
   }

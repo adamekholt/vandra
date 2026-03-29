@@ -21,6 +21,7 @@ export function useTrails() {
           region,
           length_km,
           geo,
+          description,
           start_point
         `);
 

@@ -8,9 +8,9 @@ const lengthOptions: {
   label: string;
   range: [number, number | null];
 }[] = [
-  { label: "0-5 km", range: [0, 5000] },
-  { label: "5-15 km", range: [5000, 15000] },
-  { label: "15+ km", range: [15000, null] },
+  { label: "0-5 km", range: [0, 5] },
+  { label: "5-15 km", range: [5, 15] },
+  { label: "15+ km", range: [15, null] },
 ];
 
 export default function FiltersPanel() {
