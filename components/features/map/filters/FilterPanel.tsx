@@ -32,6 +32,10 @@ export default function FiltersPanel() {
     ...new Set(trails.map((t) => t.type).filter(Boolean)),
   ];
 
+  const regions = [
+  ...new Set(trails.map((t) => t.region).filter(Boolean)),
+];
+
   return (
     <div className="space-y-4">
       <div>
@@ -49,6 +53,27 @@ export default function FiltersPanel() {
                 onClick={() => toggleDraftFilter(type)}
               >
                 {type}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+      
+      <div>
+        <h3 className="text-sm font-semibold mb-2">Region</h3>
+
+        <div className="flex flex-wrap gap-2">
+          {regions.map((region) => {
+            const active = draftFilters.includes(region);
+
+            return (
+              <Button
+                key={region}
+                variant={active ? "secondary" : "outline"}
+                size="sm"
+                onClick={() => toggleDraftFilter(region)}
+              >
+                {region}
               </Button>
             );
           })}
