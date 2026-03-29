@@ -6,18 +6,13 @@ import { LoginModal } from "./loginModal";
 import { RegisterModal } from "./registerModal";
 import { TrailModal } from "./trailModal";
 import { PasswordModal } from "./passwordModal";
+import type { TrailPreview } from "@/types/trail";
 
 type ModalType = "login" | "register" | "trail" | "resetPassword" | null;
 
-type Trail = {
-  trail_id: string;
-  name: string;
-  description?: string;
-};
-
 type ModalContextType = {
   openModal: (modal: ModalType) => void;
-  openTrailModal: (trail: Trail) => void;
+  openTrailModal: (trail: TrailPreview) => void;
   closeModal: () => void;
   resetMode: boolean;
 };
@@ -26,7 +21,7 @@ const ModalContext = createContext<ModalContextType | null>(null);
 
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [modal, setModal] = useState<ModalType>(null);
-  const [trail, setTrail] = useState<Trail | null>(null);
+  const [trail, setTrail] = useState<TrailPreview | null>(null);
   const [resetMode, setResetMode] = useState(false);
 
   const openModal = (modal: ModalType) => {
@@ -34,7 +29,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
     setModal(modal);
   };
 
-  const openTrailModal = (trail: Trail) => {
+  const openTrailModal = (trail: TrailPreview) => {
     setTrail(trail);
     setModal("trail");
   };
