@@ -3,17 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { createClient } from "@/lib/supabase/client";
-
-import { pointsToGeoJSON, getStartPoint } from "@/lib/geo";
-const supabase = createClient()
+import { saveTrail } from "@/lib/trails";
+import { pointsToGeoJSON } from "@/lib/geo";
 
 type Point = {
   lat: number;
@@ -28,8 +19,9 @@ export default function TrailForm({
   distanceKm: number;
 }) {
   const [name, setName] = useState("");
-  const [type, setType] = useState("footway");
   const [region, setRegion] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
     if (points.length < 2) {
@@ -37,59 +29,60 @@ export default function TrailForm({
       return;
     }
 
+    if (!name || !region || !description) {
+      alert("Fill all fields");
+      return;
+    }
+
     const geo = pointsToGeoJSON(points);
-    const start_point = getStartPoint(points);
+    try {
+      setLoading(true);
 
-    const { error } = await supabase.from("trails").insert({
-      name,
-      geo,
-      type,
-      region,
-      length_km: distanceKm,
-      start_point
-    });
-
-    if (error) {
-      console.error(error);
-      alert("Error saving trail");
-    } else {
+      await saveTrail(
+        geo,
+        {
+          name,
+          region,
+          description,
+        },
+        distanceKm
+      );
       alert("Saved!");
+
+      setName("");
+      setRegion("");
+      setDescription("");
+    } catch (err) {
+      console.error(err);
+      alert("Error saving trail");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 bg-white p-4 rounded-xl shadow w-72">
       <Input
-        placeholder="Trail name"
+        placeholder="Namn"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
       <Input
-        placeholder="Region"
+        placeholder="Län"
         value={region}
         onChange={(e) => setRegion(e.target.value)}
       />
 
-      <Select
-        value={type}
-        onValueChange={(value) => {
-          if (!value) return;
-          setType(value);
-        }}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="Select type" />
-        </SelectTrigger>
+      <Input
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
-        <SelectContent>
-          <SelectItem value="footway">Footway</SelectItem>
-          <SelectItem value="track">Track</SelectItem>
-          <SelectItem value="path">Path</SelectItem>
-        </SelectContent>
-      </Select>
-
-      <Button onClick={handleSave}>Save trail</Button>
+      <Button onClick={handleSave} disabled={loading}>
+        {loading ? "Saving..." : "Save trail"}
+      </Button>
     </div>
   );
 }
