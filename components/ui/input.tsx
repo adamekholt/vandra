@@ -37,7 +37,7 @@ export function Input({
       className={
         cn(
           !unstyled &&
-            "relative inline-flex w-full rounded-full border border-border bg-popover text-popover-foreground shadow-md backdrop-blur-md transition-shadow sm:text-sm", 
+            "relative inline-flex w-full rounded-full border border-border bg-popover text-popover-foreground shadow-md backdrop-blur-md transition-shadow sm:text-sm outline-none ", 
           className,
         ) || undefined
       }

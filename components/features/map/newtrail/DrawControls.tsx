@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 
 export default function DrawControls({
@@ -12,7 +11,7 @@ export default function DrawControls({
   hasPoints: boolean;
 }) {
   return (
-    <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
+    <div className=" flex pointer-events-auto gap-2">
       <Button
         onClick={onUndo}
         disabled={!hasPoints}
