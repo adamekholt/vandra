@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState } from "react"
-import { MapHeader } from "@/components/layout/header";
+import { MapHeader } from "@/components/layout/MapHeader";
 import { FilterSheet } from "@/components/layout/FilterSheet";
 import ListView from "./ListView";
 
