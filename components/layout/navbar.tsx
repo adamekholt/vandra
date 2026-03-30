@@ -5,7 +5,7 @@ import { logout } from "@/lib/supabase/auth";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useModal } from "@/components/modal/modalProvider";
-import { Bookmark, MapPin, Plus, User } from "lucide-react";
+import { Bookmark, MapPin, Plus, User, Table2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUser } from "@/hooks/useUser";
 
@@ -65,9 +65,9 @@ export function Navbar() {
                   pathname === "/trails" && "bg-secondary"
                 )}
               >
-                <MapPin className="size-5" />
+                <Table2 className="size-5" />
               </div>
-              <span className="text-xs">Visa alla</span>
+              <span className="text-xs">Databas</span>
             </Link>
 
           <Link href="/trails/new" className="flex flex-col items-center gap-1">
