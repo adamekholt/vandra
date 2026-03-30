@@ -8,7 +8,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={cn("w-full table-fixed caption-bottom text-sm", className)}
         {...props}
       />
     </div>
@@ -49,7 +49,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
       data-slot="table-row"
-      className={cn("hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors", className)}
+      className={cn("data-[state=selected]:bg-muted border-b transition-colors", className)}
       {...props}
     />
   )
@@ -69,7 +69,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   return (
     <td
       data-slot="table-cell"
-      className={cn("p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0", className)}
+      className={cn("p-3 align-middle text-foreground [&:has([role=checkbox])]:pr-0", className)}
       {...props}
     />
   )
