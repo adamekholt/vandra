@@ -39,7 +39,7 @@ export function FieldItem({
 }: FieldPrimitive.Item.Props): React.ReactElement {
   return (
     <FieldPrimitive.Item
-      className={cn("flex", className)}
+      className={cn("flex flex-col w-full", className)}
       data-slot="field-item"
       {...props}
     />
