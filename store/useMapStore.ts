@@ -19,6 +19,9 @@ type MapState = {
   selectedTrailId: string | null;
   setSelectedTrailId: (id: string | null) => void;
 
+  focusTrailId: string | null;
+  setFocusTrailId: (id: string | null) => void;  
+
   trails: Trail[];
   filteredTrails: Trail[];
   setTrails: (trails: Trail[]) => void;
@@ -39,6 +42,8 @@ export const useMapStore = create<MapState>((set, get) => ({
   lengthRange: null,
   selectedTrailId: null,
   setSelectedTrailId: (id) => set({ selectedTrailId: id }),
+  focusTrailId: null,
+  setFocusTrailId: (id) => set({ focusTrailId: id }),
   draftFilters: [],
   draftLengthRange: null,
 
