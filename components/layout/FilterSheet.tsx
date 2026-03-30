@@ -16,7 +16,7 @@ export function FilterSheet() {
         <Sheet>
         <SheetTrigger
             render={
-            <Button className="w-full h-20" variant={"outline"}>
+            <Button className="w-full min-h-[10vh]" variant={"outline"}>
                 Filter
             </Button>
             }
