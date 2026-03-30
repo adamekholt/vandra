@@ -47,7 +47,7 @@ export function TrailModal({ open, onClose, trail }: Props) {
 
           <div className="flex gap-2">
             <Button className="flex-1">
-              Gå til karta
+              Gå till kartan
             </Button>
           </div>
         </div>

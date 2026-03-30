@@ -35,13 +35,13 @@ export function PasswordModal({ open, onClose, openModal }: Props) {
 
       <div className="flex flex-col gap-4">
 
-        <h2 className="text-lg font-semibold">Reset password</h2>
+        <h2 className="text-lg font-semibold">Återställ lösenord</h2>
 
         {!sent ? (
           <>
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Ange din e-post"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -51,13 +51,13 @@ export function PasswordModal({ open, onClose, openModal }: Props) {
             )}
 
             <Button onClick={handleReset} disabled={!email}>
-              Send reset link
+              Skicka länk
             </Button>
           </>
         ) : (
           <>
             <p className="text-sm text-center">
-              Check your email for a password reset link.
+              Kontrollera din e-post för en länk för att återställa lösenord.
             </p>
 
             <Button
@@ -66,7 +66,7 @@ export function PasswordModal({ open, onClose, openModal }: Props) {
                 openModal("login");
               }}
             >
-              Back to login
+              Tillbaka till inloggning
             </Button>
           </>
         )}
