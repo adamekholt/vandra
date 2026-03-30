@@ -11,10 +11,12 @@ import UserLocation from "./map/UserLocation";
 import TrailLayer from "./map/layers/TrailLayer";
 import SearchInput from "./map/filters/SearchInput";
 import { useMapStore } from "@/store/useMapStore";
+import { useTrails } from "@/hooks/useTrails";
 
 const { BaseLayer } = LayersControl;
 
 export default function Map() {
+  useTrails();
   const selectedTrailId = useMapStore((s) => s.selectedTrailId);
   const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
   
@@ -27,16 +29,16 @@ export default function Map() {
       className="h-full w-full [&_.leaflet-top]:!top-20"
     >
       <LayersControl position="topright">
-        <BaseLayer checked name="Outdoor">
-          <OutdoorLayer />
-        </BaseLayer>
-
+        <BaseLayer checked name="Topographic">
+          <TopoLayer />
+        </BaseLayer>             
+        
         <BaseLayer name="Satellite">
           <SatelliteLayer />
         </BaseLayer>
 
-        <BaseLayer name="Topographic">
-          <TopoLayer />
+        <BaseLayer  name="Outdoor">
+          <OutdoorLayer />
         </BaseLayer>
       </LayersControl>
 
