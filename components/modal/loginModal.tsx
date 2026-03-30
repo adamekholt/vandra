@@ -61,7 +61,7 @@ export function LoginModal({ open, onClose, openModal }: Props) {
       <div className="flex flex-col gap-6">
 
         <h2 className="text-lg font-semibold">
-          {resetMode ? "Set new password" : "Login"}
+          {resetMode ? "Set new password" : "Logga in"}
         </h2>
 
         <Form onSubmit={handleSubmit}>
@@ -70,7 +70,6 @@ export function LoginModal({ open, onClose, openModal }: Props) {
             {!resetMode && (
               <Field name="email">
                 <FieldItem>
-                  <FieldLabel>Email</FieldLabel>
                   <Input
                     type="email"
                     placeholder="Email"
@@ -86,11 +85,11 @@ export function LoginModal({ open, onClose, openModal }: Props) {
             <Field name="password">
               <FieldItem>
                 <FieldLabel>
-                  {resetMode ? "New password" : "Password"}
+                  {resetMode ? "Nytt lösenord" : ""}
                 </FieldLabel>
                 <Input
                   type="password"
-                  placeholder={resetMode ? "New password" : "Password"}
+                  placeholder={resetMode ? "Nytt lösenord" : "Lösenord"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -102,10 +101,9 @@ export function LoginModal({ open, onClose, openModal }: Props) {
             {resetMode && (
               <Field name="confirmPassword">
                 <FieldItem>
-                  <FieldLabel>Confirm password</FieldLabel>
                   <Input
                     type="password"
-                    placeholder="Confirm password"
+                    placeholder="Bekräfta lösenord"
                     value={confirmPassword}
                     onChange={(e) =>
                       setConfirmPassword(e.target.value)
@@ -122,7 +120,7 @@ export function LoginModal({ open, onClose, openModal }: Props) {
             )}
 
             <Button type="submit">
-              {resetMode ? "Update password" : "Login"}
+              {resetMode ? "Update password" : "Logga in"}
             </Button>
 
           </div>
@@ -131,22 +129,22 @@ export function LoginModal({ open, onClose, openModal }: Props) {
         {!resetMode && (
           <>
             <p className="text-sm text-center">
-              Don't have an account?{" "}
+              Har du inte ett konto redan?{" "}
               <button
                 onClick={() => openModal("register")}
                 className="underline"
               >
-                Register
+                Registrera dig
               </button>
             </p>
 
             <p className="text-sm text-center">
-              Forgotten your password?{" "}
+              Glömt lösenord?{" "}
               <button
                 onClick={() => openModal("resetPassword")}
                 className="underline"
               >
-                Reset password
+                Återställ lösenord
               </button>
             </p>
           </>

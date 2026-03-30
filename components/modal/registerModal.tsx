@@ -46,7 +46,7 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
       <div className="flex flex-col gap-6">
 
         <h2 className="text-lg font-semibold">
-          Create account
+          Skapa konto
         </h2>
 
         <Form onSubmit={handleRegister}>
@@ -54,9 +54,8 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
 
             <Field name="firstName">
               <FieldItem>
-                <FieldLabel>First name</FieldLabel>
                 <Input
-                  placeholder="First name"
+                  placeholder="Förnamn"
                   required
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -67,9 +66,8 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
 
             <Field name="lastName">
               <FieldItem>
-                <FieldLabel>Last name</FieldLabel>
                 <Input
-                  placeholder="Last name"
+                  placeholder="Efternamn"
                   required
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -80,7 +78,6 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
 
             <Field name="email">
               <FieldItem>
-                <FieldLabel>Email</FieldLabel>
                 <Input
                   type="email"
                   placeholder="Email"
@@ -94,10 +91,9 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
 
             <Field name="password">
               <FieldItem>
-                <FieldLabel>Password</FieldLabel>
                 <Input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Lösenord"
                   required
                   minLength={6}
                   value={password}
@@ -114,15 +110,15 @@ export function RegisterModal({ open, onClose, onLogin }: Props) {
             <Button
               type="submit"
               disabled={!firstName || !lastName || !email || !password}
-            >Register</Button>
+            >Registrera dig</Button>
 
           </div>
         </Form>
 
         <p className="text-sm text-center">
-          Already have an account?{" "}
+          Har du redan ett konto?{" "}
           <button onClick={onLogin} className="underline">
-            Login
+            Logga in
           </button>
         </p>
 
