@@ -43,7 +43,7 @@ export async function GET() {
       }),
     };
 
-    return Response.json(geojson);
+    return Response.json(data);
 
   } catch (err) {
     return Response.json(

@@ -12,9 +12,10 @@ export function useTrails() {
     const load = async () => {
       try {
         const res = await fetch("/api/trails");
-        const data: Trail[] = await res.json();
+        const json = await res.json();
+        const trails = Array.isArray(json) ? json : json.data;
 
-        setTrails(data);
+        setTrails(trails ?? []);
       } catch {
         setTrails([]);
       } finally {
