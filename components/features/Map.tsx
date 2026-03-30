@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import { MapContainer, LayersControl } from "react-leaflet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OutdoorLayer from "./map/layers/OutdoorLayer";
 import SatelliteLayer from "./map/layers/SatelliteLayer";
 import TopoLayer from "./map/layers/TopoLayer";
@@ -12,13 +12,25 @@ import TrailLayer from "./map/layers/TrailLayer";
 import SearchInput from "./map/filters/SearchInput";
 import { useMapStore } from "@/store/useMapStore";
 import { useTrails } from "@/hooks/useTrails";
+import { useSearchParams } from "next/navigation";
+import ZoomToTrail from "./ZoomToTrail";
+import { useRouter } from "next/navigation";
 
 const { BaseLayer } = LayersControl;
 
 export default function Map() {
   useTrails();
-  const selectedTrailId = useMapStore((s) => s.selectedTrailId);
-  const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
+  const params = useSearchParams();
+  const router = useRouter();
+
+ const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
+
+  useEffect(() => {
+    const trailId = params.get("trailId");
+    if (!trailId) return;
+    setSelectedTrailId(trailId);
+    router.replace("/map");
+  }, []);
   
   return (
     <div className="h-full w-full">
@@ -44,6 +56,7 @@ export default function Map() {
 
       <TrailMarkers onSelectTrail={setSelectedTrailId} />
       <TrailLayer />
+      <ZoomToTrail />
       <UserLocation />
     </MapContainer>
     <SearchInput />

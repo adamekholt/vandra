@@ -3,6 +3,8 @@ import { GlobalModal } from "./globalModal";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import type { TrailPreview } from "@/types/trail";
+import { useRouter } from "next/navigation";
+import { useMapStore } from "@/store/useMapStore";
 
 type Props = {
   open: boolean;
@@ -11,7 +13,16 @@ type Props = {
 };
 
 export function TrailModal({ open, onClose, trail }: Props) {
+  const router = useRouter();
+  const setFocusTrailId = useMapStore((s) => s.setFocusTrailId);
+
   if (!trail) return null;
+
+  const handleGoToMap = () => {
+    setFocusTrailId(trail.trail_id);
+    router.push("/map");
+    onClose();
+  };
 
   return (
     <GlobalModal open={open} onClose={onClose}>
@@ -46,7 +57,7 @@ export function TrailModal({ open, onClose, trail }: Props) {
           )}
 
           <div className="flex gap-2">
-            <Button className="flex-1">
+            <Button className="flex-1" onClick={handleGoToMap}>
               Gå till kartan
             </Button>
           </div>
