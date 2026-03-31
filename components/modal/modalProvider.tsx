@@ -7,6 +7,7 @@ import { RegisterModal } from "./registerModal";
 import { TrailModal } from "./trailModal";
 import { PasswordModal } from "./passwordModal";
 import type { TrailPreview } from "@/types/trail";
+import { useFavorites } from "@/hooks/useFavorites";
 
 type ModalType = "login" | "register" | "trail" | "resetPassword" | null;
 
@@ -23,6 +24,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [modal, setModal] = useState<ModalType>(null);
   const [trail, setTrail] = useState<TrailPreview | null>(null);
   const [resetMode, setResetMode] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites();
 
   const openModal = (modal: ModalType) => {
     setTrail(null);
@@ -85,6 +87,8 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
         open={modal === "trail"}
         onClose={closeModal}
         trail={trail}
+        favorites={favorites}
+        onToggleFavorite={toggleFavorite}
       />
 
       <PasswordModal
