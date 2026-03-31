@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import Link from "next/link";
 import type { TrailPreview } from "@/types/trail";
+import { ListWrapper } from "@/components/layout/ListWrapper";
 
 export default function Page() {
 //midlertidig mockdata frem til bugfix av trails routen er gjennomført
@@ -67,11 +68,14 @@ export default function Page() {
         </Button>
       </Link>
 
-        <div className="mt-4 space-y-3">
-          {nearby.map((trail) => (
-            <TrailCard key={trail.trail_id} trail={trail} />
-          ))}
-        </div>
+      <ListWrapper
+        title="Nærliggende turer"
+        className="mt-4"
+      >
+        {nearby.map((trail) => (
+          <TrailCard key={trail.trail_id} trail={trail} />
+        ))}
+      </ListWrapper>
       </main>
       <Navbar />
     </div>
