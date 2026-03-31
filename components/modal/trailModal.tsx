@@ -5,14 +5,17 @@ import { Button } from "@/components/ui/button";
 import type { TrailPreview } from "@/types/trail";
 import { useRouter } from "next/navigation";
 import { useMapStore } from "@/store/useMapStore";
+import { FavoritesToggle } from "../features/FavoritesToggle";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   trail: TrailPreview | null;
+  favorites: string[];
+  onToggleFavorite: (id: string) => void;
 };
 
-export function TrailModal({ open, onClose, trail }: Props) {
+export function TrailModal({ open, onClose, trail, favorites, onToggleFavorite}: Props) {
   const router = useRouter();
   const setFocusTrailId = useMapStore((s) => s.setFocusTrailId);
 
@@ -60,6 +63,11 @@ export function TrailModal({ open, onClose, trail }: Props) {
             <Button className="flex-1" onClick={handleGoToMap}>
               Gå till kartan
             </Button>
+            <FavoritesToggle
+              trailId={trail.trail_id}
+              isFavorite={favorites.includes(trail.trail_id)}
+              onToggle={onToggleFavorite}
+            />
           </div>
         </div>
 
