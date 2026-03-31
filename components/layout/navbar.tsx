@@ -42,16 +42,16 @@ export function Navbar() {
           <span className="text-xs">Karta</span>
         </Link>
 
-        <Link href="/saved" className="flex flex-col items-center gap-1">
+        <Link href="/favorites" className="flex flex-col items-center gap-1">
           <div
             className={cn(
               "flex items-center justify-center rounded-full px-3 py-2",
-              pathname === "/saved" && "bg-secondary"
+              pathname === "/favorites" && "bg-secondary"
             )}
           >
             <Bookmark className="size-5" />
           </div>
-          <span className="text-xs">Lagrade</span>
+          <span className="text-xs">Sparade</span>
         </Link>
       </>
     )}

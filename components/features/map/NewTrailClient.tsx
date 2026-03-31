@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { Header } from "@/components/layout/header";
 import { FormSheet } from "@/components/layout/FormSheet";
 import TrailForm from "@/components/features/TrailForm";
 import { totalDistance } from "@/lib/map/distance";
