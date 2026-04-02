@@ -3,7 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { FormSheet } from "@/components/layout/FormSheet";
-import TrailForm from "@/components/features/TrailForm";
+import TrailForm from "@/components/layout/form/TrailForm";
 import { totalDistance } from "@/lib/map/distance";
 import type { Point } from "@/components/features/NewTrail";
 
