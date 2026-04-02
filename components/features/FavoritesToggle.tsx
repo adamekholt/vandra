@@ -26,7 +26,7 @@ export function FavoritesToggle({ trailId, isFavorite, onToggle }: Props) {
 
   return (
     <Button
-      variant="secondary"
+      variant="link"
       onClick={() => onToggle(trailId)}
       className="rounded-lg"
     >

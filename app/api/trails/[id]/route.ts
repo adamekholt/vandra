@@ -31,3 +31,50 @@ export async function GET(
     );
   }
 }
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await req.json();
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return Response.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const { data: profile } = await supabase
+      .from("users")
+      .select("role")
+      .eq("user_id", user.id)
+      .single();
+
+    if (!profile || profile.role !== "admin") {
+      return Response.json({ error: "Not authorized" }, { status: 403 });
+    }
+
+    const { data, error } = await supabase
+      .from("trails")
+      .update({
+        name: body.name,
+        region: body.region,
+        description: body.description,
+        last_updated: new Date().toISOString(),
+      })
+      .eq("trail_id", id)
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+
+    return Response.json(data);
+
+  } catch {
+    return Response.json({ error: "Server error" }, { status: 500 });
+  }
+}
