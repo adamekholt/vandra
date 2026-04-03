@@ -1,25 +1,31 @@
-export async function getAllTrails() {
-  const res = await fetch("/api/trails", {
-    method: "GET",
-  });
+import { createClient } from "@/lib/supabase/server";
 
-  if (!res.ok) {
-    const error = await res.json().catch(() => null);
-    throw new Error(error?.error || "Failed to fetch trails");
+export async function getAllTrails() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("trails")
+    .select("*");
+    
+  if (error) {
+    throw new Error(error.message);
   }
 
-  return res.json();
+  return data;
 }
 
 export async function getTrailById(id: string) {
-  const res = await fetch(`/api/trails/${id}`, {
-    method: "GET",
-  });
+  const supabase = await createClient();
 
-  if (!res.ok) {
-    const error = await res.json().catch(() => null);
-    throw new Error(error?.error || "Failed to fetch trail");
+  const { data, error } = await supabase
+    .from("trails")
+    .select("*")
+    .eq("trail_id", id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
   }
 
-  return res.json();
+  return data;
 }
