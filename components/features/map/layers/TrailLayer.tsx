@@ -6,13 +6,13 @@ import type { Trail } from "@/types/trail";
 import type { Geometry } from "geojson";
 
 export default function TrailLayer() {
-  const selectedTrailId = useMapStore((s) => s.selectedTrailId);
-  const trails = useMapStore((s) => s.filteredTrails);
+  const focusTrailId = useMapStore((s) => s.focusTrailId);
+  const trails = useMapStore((s) => s.trails);
 
-  if (!selectedTrailId) return null;
+  if (!focusTrailId) return null;
 
   const trail = trails.find(
-    (t: Trail) => t.trail_id === selectedTrailId
+    (t: Trail) => t.trail_id === focusTrailId
   );
 
   if (!trail || !trail.geo) return null;
@@ -24,9 +24,10 @@ export default function TrailLayer() {
 
   return (
     <GeoJSON
+      key={focusTrailId}
       data={geometry}
       style={{
-        color: "#e27c00",
+        color: "#D97A2B",
         weight: 3
       }}
     />

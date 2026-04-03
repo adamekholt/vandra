@@ -72,9 +72,9 @@ export const useMapStore = create<MapState>((set, get) => ({
     const { trails, draftFilters, draftLengthRange, search } = get();
 
     const filtered = trails.filter((t: Trail) => {
-      const matchesType =
+      const matchesRegion =
         draftFilters.length === 0 ||
-        draftFilters.includes(t.type ?? "");
+        draftFilters.includes(t.region ?? "");
 
       const matchesLength =
         !draftLengthRange ||
@@ -86,7 +86,7 @@ export const useMapStore = create<MapState>((set, get) => ({
         !search ||
         t.name.toLowerCase().includes(search.toLowerCase());
 
-      return matchesType && matchesLength && matchesSearch;
+      return matchesRegion && matchesLength && matchesSearch;
     });
 
     set({

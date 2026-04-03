@@ -1,10 +1,12 @@
 "use client";
-
 import dynamic from "next/dynamic";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { MapHeader } from "@/components/layout/MapHeader";
 import { FilterSheet } from "@/components/layout/FilterSheet";
 import ListView from "./ListView";
+import { TrailSheet } from "@/components/layout/TrailSheet";
+import { useMapStore } from "@/store/useMapStore";
+import { Navbar } from "@/components/layout/navbar";
 
 const Map = dynamic(() => import("@/components/features/Map"), {
   ssr: false,
@@ -12,6 +14,25 @@ const Map = dynamic(() => import("@/components/features/Map"), {
 
 export default function MapClient() {
   const [view, setView] = useState<"map" | "list">("map");
+  const selectedTrailId = useMapStore((s) => s.selectedTrailId);
+  const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
+  const trails = useMapStore((s) => s.trails);
+  const selectedTrail = trails.find((t) => t.trail_id === selectedTrailId) ?? null;
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  const toggleFavorite = (id: string) => {
+    setFavorites((prev) =>
+      prev.includes(id)
+        ? prev.filter((f) => f !== id)
+        : [...prev, id]
+    );
+  };
+
+  useEffect(() => {
+  if (view !== "map") {
+    setSelectedTrailId(null);
+  }
+}, [view]);
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -27,7 +48,17 @@ export default function MapClient() {
           </div>
         )}
         <FilterSheet />
+        {view === "map" && (
+          <TrailSheet
+            open={!!selectedTrail}
+            onClose={() => setSelectedTrailId(null)}
+            trail={selectedTrail}
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
+          />
+        )}
       </div>
+      <Navbar />
 
     </div>
   )
