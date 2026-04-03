@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   title?: string;
@@ -28,10 +27,7 @@ export function ListWrapper({
           )}
         </div>
       )}
-
-      <ScrollArea className="max-h-[500px] pr-2">
-        <div className="space-y-3">{children}</div>
-      </ScrollArea>
+      <div className="space-y-3">{children}</div>
     </div>
   );
 }
