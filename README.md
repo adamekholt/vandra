@@ -77,3 +77,17 @@ Make sure current location is approved to use the userLocation functionality
 - User generated content where a user role can create their own trails. 
 - Improved desktop UI
 - Improve location logic so that user/admin later can create trails by tracking and saving the geometry while on a hike. 
+
+## Trails table
+
+<img width="1565" height="829" alt="Screenshot 2026-04-03 at 23 41 15" src="https://github.com/user-attachments/assets/30fd40db-3c27-450c-a13b-88e57601fada" />
+
+## Demo
+
+<img width="344" height="750" alt="Screenshot 2026-04-03 at 23 30 07" src="https://github.com/user-attachments/assets/c0f40adb-6454-4074-a042-fa972923b67b" />
+<img width="347" height="751" alt="Screenshot 2026-04-03 at 23 29 55" src="https://github.com/user-attachments/assets/00cab6d2-2d89-4074-9d6f-a7b9776887e0" />
+<img width="347" height="751" alt="Screenshot 2026-04-03 at 23 28 23" src="https://github.com/user-attachments/assets/379e15f7-1559-41d5-9579-7118024e5685" />
+<img width="346" height="756" alt="Screenshot 2026-04-03 at 23 29 34" src="https://github.com/user-attachments/assets/5ddcb37e-200b-46f3-b2dd-2b21a02d07da" />
+<img width="341" height="748" alt="Screenshot 2026-04-03 at 23 28 45" src="https://github.com/user-attachments/assets/8556511a-cbf8-451e-b0d9-2f6812749555" />
+
+
