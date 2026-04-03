@@ -1,18 +1,43 @@
 "use client"
 import { useEffect, useState } from "react"
+import { useUser } from "@/hooks/useUser"
 
 export function useFavorites() {
+  const { user, loading: userLoading } = useUser()
+
   const [favorites, setFavorites] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    fetch("/api/favorites", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setFavorites(data.favorites || []))
-      .finally(() => setLoading(false))
-  }, [])
+    if (userLoading) return
+
+    if (!user) {
+      setIsAuthenticated(false)
+      setFavorites([])
+      setLoading(false)
+      return
+    }
+
+    setIsAuthenticated(true)
+
+    const fetchFavorites = async () => {
+      const res = await fetch("/api/favorites", {
+        credentials: "include",
+      })
+
+      if (!res.ok) {
+        console.error("Failed to fetch favorites")
+        setFavorites([])
+        return
+      }
+
+      const data = await res.json()
+      setFavorites(data.favorites || [])
+    }
+
+    fetchFavorites().finally(() => setLoading(false))
+  }, [user, userLoading])
 
   const toggleFavorite = async (trailId: string) => {
     const isFavorite = favorites.includes(trailId)
@@ -44,6 +69,7 @@ export function useFavorites() {
   return {
     favorites,
     loading,
+    isAuthenticated,
     toggleFavorite,
   }
 }

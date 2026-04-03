@@ -2,8 +2,6 @@
 
 import { Bookmark } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
 
 type Props = {
   trailId: string
@@ -12,22 +10,13 @@ type Props = {
 }
 
 export function FavoritesToggle({ trailId, isFavorite, onToggle }: Props) {
-  const [user, setUser] = useState<any>(null)
-
-  useEffect(() => {
-    const supabase = createClient()
-
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user)
-    })
-  }, [])
-
-  if (!user) return null
-
   return (
     <Button
       variant="link"
-      onClick={() => onToggle(trailId)}
+      onClick={(e) => {
+        e.stopPropagation()
+        onToggle(trailId)
+      }}
       className="rounded-lg"
     >
       <Bookmark

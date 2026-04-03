@@ -11,6 +11,7 @@ export async function GET() {
   const { data, error } = await supabase
     .from("favorites")
     .select("trail_id")
+    .eq("user_id", user.id)
 
   if (error) {
     return Response.json({ error: error.message }, { status: 500 })
@@ -37,7 +38,10 @@ export async function POST(req: Request) {
 
   const { data, error } = await supabase
     .from("favorites")
-    .insert({ trail_id })
+    .insert({
+      trail_id,
+      user_id: user.id,
+    })
     .select()
 
   if (error) {
@@ -68,6 +72,7 @@ export async function DELETE(req: Request) {
     .from("favorites")
     .delete()
     .eq("trail_id", trail_id)
+    .eq("user_id", user.id)
 
   if (error) {
     return Response.json({ error: error.message }, { status: 500 })
