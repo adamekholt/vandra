@@ -3,72 +3,34 @@
 import { useEffect, useRef, useState } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
-import { userIcon } from "@/lib/map/luciedeIcons";
+import { Locate } from "lucide-react";
+import { renderToString } from "react-dom/server";
+import { Button } from "@/components/ui/button";
 
 export default function UserLocation() {
   const map = useMap();
-
   const [active, setActive] = useState(false);
-  const activeRef = useRef(false);
 
   const markerRef = useRef<L.Marker | null>(null);
   const circleRef = useRef<L.Circle | null>(null);
 
   useEffect(() => {
-    const control = (L as any).control({ position: "topright" });
-
-    control.onAdd = () => {
-      const div = L.DomUtil.create("div", "leaflet-bar");
-
-      const button = L.DomUtil.create("a", "", div);
-      button.innerHTML = "📍";
-      button.href = "#";
-      button.title = "Min lokasjon";
-
-      button.style.width = "30px";
-      button.style.height = "30px";
-      button.style.display = "flex";
-      button.style.alignItems = "center";
-      button.style.justifyContent = "center";
-      button.style.fontSize = "18px";
-
-      L.DomEvent.on(button, "click", (e) => {
-        L.DomEvent.stop(e);
-
-        activeRef.current = !activeRef.current;
-        setActive(activeRef.current);
-
-        // visuell feedback
-        button.style.background = activeRef.current ? "#000" : "#fff";
-        button.style.color = activeRef.current ? "#fff" : "#000";
-      });
-
-      return div;
-    };
-
-    control.addTo(map);
-
-    return () => {
-      control.remove();
-    };
-  }, [map]);
-
-  // 🔹 location event (én gang)
-  useEffect(() => {
     const onLocationFound = (e: L.LocationEvent) => {
-      if (!activeRef.current) return;
+      if (!active) return;
 
-      // fjern gammel
-      if (markerRef.current) {
-        map.removeLayer(markerRef.current);
-      }
-      if (circleRef.current) {
-        map.removeLayer(circleRef.current);
-      }
-
-      // legg til ny
+      if (markerRef.current) map.removeLayer(markerRef.current);
+      if (circleRef.current) map.removeLayer(circleRef.current);
       markerRef.current = L.marker(e.latlng, {
-        icon: userIcon(),
+        icon: L.divIcon({
+          className: "flex items-center justify-center",
+          html: renderToString(
+            <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-gray-300">
+              <Locate className="w-4 h-4 text-gray-700" />
+            </div>
+          ),
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+        }),
       }).addTo(map);
 
       circleRef.current = L.circle(e.latlng, {
@@ -77,16 +39,13 @@ export default function UserLocation() {
     };
 
     map.on("locationfound", onLocationFound);
-
     return () => {
       map.off("locationfound", onLocationFound);
     };
-  }, [map]);
+  }, [map, active]);
 
-  // 🔹 toggle behavior
   useEffect(() => {
     if (!active) {
-      // fjern alt
       if (markerRef.current) {
         map.removeLayer(markerRef.current);
         markerRef.current = null;
@@ -100,9 +59,22 @@ export default function UserLocation() {
       return;
     }
 
-    // hent location
     map.locate({ setView: true, maxZoom: 13 });
   }, [active, map]);
 
-  return null;
+  return (
+    <div className="absolute right-4 bottom-50 z-[1000]">
+      <Button
+        size="icon-lg"
+        variant="outline"
+        onClick={() => setActive((prev) => !prev)}
+        className={`
+          rounded-full shadow-md
+          ${active ? "bg-accent text-accent-foreground" : ""}
+        `}
+      >
+        <Locate />
+      </Button>
+    </div>
+  );
 }

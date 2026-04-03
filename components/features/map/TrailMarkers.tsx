@@ -14,11 +14,15 @@ type Props = {
 export default function TrailMarkers({ onSelectTrail }: Props) {
   const map = useMap();
   const trails = useMapStore((s) => s.filteredTrails);
+  const setFocusTrailId = useMapStore((s) => s.setFocusTrailId);
 
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
 
   useEffect(() => {
-    const markerCluster = L.markerClusterGroup();
+    const markerCluster = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      spiderfyOnMaxZoom: true,
+    });
     clusterRef.current = markerCluster;
     map.addLayer(markerCluster);
 
@@ -44,18 +48,15 @@ export default function TrailMarkers({ onSelectTrail }: Props) {
             icon: getTrailIcon(trail.type),
           });
 
-          marker.bindPopup(trail.name);
-
-          marker.on("popupopen", () => {
-            onSelectTrail(trail.trail_id);
-          });
-          marker.on("popupclose", () => {
-            onSelectTrail(null);
+          marker.on("click", (e) => {
+            L.DomEvent.stopPropagation(e);
+           onSelectTrail(trail.trail_id);
+            setFocusTrailId(trail.trail_id);
           });
 
       cluster.addLayer(marker);
     });
-  }, [trails, onSelectTrail]);
+  }, [trails, setFocusTrailId, onSelectTrail]);
 
   return null;
 }
