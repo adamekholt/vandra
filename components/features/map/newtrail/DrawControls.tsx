@@ -17,7 +17,7 @@ export default function DrawControls({
         disabled={!hasPoints}
         variant="secondary"
       >
-        Undo last
+        Ångra punkt
       </Button>
 
       <Button
@@ -25,7 +25,7 @@ export default function DrawControls({
         disabled={!hasPoints}
         variant="destructive"
       >
-        Reset
+        Återställ
       </Button>
     </div>
   );

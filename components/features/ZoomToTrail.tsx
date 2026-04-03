@@ -28,7 +28,7 @@ export default function ZoomToTrail() {
 
     map.flyToBounds(bounds, {
         paddingTopLeft: [60, 60],
-        paddingBottomRight: [60, 220], // 👈 PLASS TIL SHEET 🔥
+        paddingBottomRight: [60, 220],
         duration: 1.2,
         maxZoom: 14,
     });

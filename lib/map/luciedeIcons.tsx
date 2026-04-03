@@ -6,7 +6,7 @@ export function trailIcon(color: string = "green"): DivIcon {
   return new DivIcon({
     className: "",
     html: renderToString(
-      <FlagTriangleRight size={28} color={color} fill={color} />
+      <Pin size={28} color={color} fill={color} />
     ),
     iconSize: [28, 28],
     iconAnchor: [14, 28],

@@ -36,7 +36,7 @@ export default function AdminTrailTable() {
     loadData();
   }, []);
 
-  if (loading) return <div className="p-8">Loading trails...</div>;
+  if (loading) return <div className="p-8">Laddar...</div>;
 
   return (
     <div className="p-8 space-y-4">

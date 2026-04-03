@@ -8,9 +8,8 @@ import type { Geometry } from "geojson";
 export default function TrailLayer() {
   const focusTrailId = useMapStore((s) => s.focusTrailId);
   const trails = useMapStore((s) => s.trails);
-
   if (!focusTrailId) return null;
-
+  
   const trail = trails.find(
     (t: Trail) => t.trail_id === focusTrailId
   );
