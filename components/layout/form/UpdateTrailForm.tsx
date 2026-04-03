@@ -77,6 +77,37 @@ export default function UpdateTrailForm({ id }: { id: string }) {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmed = confirm("Är du säker på att du vill ta bort trailen?");
+    if (!confirmed) return;
+
+    try {
+      setSaving(true);
+      setError(null);
+
+      const res = await fetch(`/api/trails/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.error || "Kunde inte ta bort");
+      }
+
+      router.push("/trails");
+
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Något gick fel");
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 w-full">
       <Form onSubmit={handleSubmit}>
@@ -134,9 +165,15 @@ export default function UpdateTrailForm({ id }: { id: string }) {
             <p className="text-sm text-red-500">{error}</p>
           )}
 
+        <div className="flex gap-2">
           <Button type="submit" disabled={saving}>
             {saving ? "Sparar..." : "Spara"}
           </Button>
+
+          <Button type="button" variant="destructive" onClick={handleDelete} disabled={saving}>
+            Radera led
+          </Button>
+        </div>
 
         </div>
       </Form>
