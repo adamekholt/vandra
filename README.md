@@ -76,7 +76,10 @@ Make sure current location is approved to use the userLocation functionality
 - Filtering and sort in admin trails table
 - User generated content where a user role can create their own trails. 
 - Improved desktop UI
-- Improve location logic so that user/admin later can create trails by tracking and saving the geometry while on a hike. 
+- Improve location logic so that user/admin later can create trails by tracking and saving the geometry while on a hike.
+
+## Documentation
+In the documentation folder i´ve added the notes from my presentation, where I talk more about the prosesse and the project. 
 
 ## Trails table
 
