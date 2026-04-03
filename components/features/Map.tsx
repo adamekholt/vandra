@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import { MapContainer, LayersControl } from "react-leaflet";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import OutdoorLayer from "./map/layers/OutdoorLayer";
 import SatelliteLayer from "./map/layers/SatelliteLayer";
 import TopoLayer from "./map/layers/TopoLayer";

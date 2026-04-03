@@ -10,7 +10,6 @@ export default async function AdminLayout({
   const { data: { session } } = await supabase.auth.getSession()
   const user = session?.user
 
-  // ikke logget inn
   if (!user) {redirect("/")}
 
   const { data: profile, error } = await supabase
@@ -19,7 +18,6 @@ export default async function AdminLayout({
     .eq("user_id", user.id)
     .single()
 
-  // databasefeil eller ikke admin
   if (error || profile?.role !== "admin") {
     redirect("/")
   }

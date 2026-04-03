@@ -1,11 +1,9 @@
 "use client";
-
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import { MapContainer, LayersControl } from "react-leaflet";
 import { Header } from "./map/newtrail/Header";
-
 import TopoLayer from "./map/layers/TopoLayer";
 import OutdoorLayer from "./map/layers/OutdoorLayer";
 import SatelliteLayer from "./map/layers/SatelliteLayer";

@@ -60,7 +60,7 @@ export default function FiltersPanel() {
       </div>
       
       <div>
-        <h3 className="text-sm font-semibold mb-2">Region</h3>
+        <h3 className="text-sm font-semibold mb-2">Län</h3>
 
         <div className="flex flex-wrap gap-2">
           {regions.map((region) => {
@@ -81,7 +81,7 @@ export default function FiltersPanel() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Längd</h3>
+        <h3 className="text-sm font-semibold mb-2">Distans</h3>
 
         <div className="flex flex-wrap gap-2">
           {lengthOptions.map((opt) => {

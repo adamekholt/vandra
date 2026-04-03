@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import Link from "next/link";
-import { TrailsSection } from "@/components/layout/landingpage/TrailsSection";
+import { TrailsSection } from "@/components/layout/TrailsSection";
 import { getAllTrails } from "@/lib/api/trails";
 
 export default async function Page() {

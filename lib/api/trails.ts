@@ -10,7 +10,6 @@ export async function getAllTrails() {
   if (error) {
     throw new Error(error.message);
   }
-
   return data;
 }
 
@@ -26,6 +25,5 @@ export async function getTrailById(id: string) {
   if (error) {
     throw new Error(error.message);
   }
-
   return data;
 }
