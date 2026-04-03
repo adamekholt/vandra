@@ -7,17 +7,15 @@ import L from "leaflet";
 export default function ZoomToTrail() {
     const map = useMap();
     const focusTrailId = useMapStore((s) => s.focusTrailId);
-    const setFocusTrailId = useMapStore((s) => s.setFocusTrailId);
     const trails = useMapStore((s) => s.trails);
-    const setSelectedTrailId = useMapStore((s) => s.setSelectedTrailId);
 
-    const hasZoomedRef = useRef(false);
+    const prevTrailIdRef = useRef<string | null>(null);
 
     useEffect(() => {
     if (!focusTrailId || !trails?.length) return;
-    if (hasZoomedRef.current) return;
+    if (prevTrailIdRef.current === focusTrailId) return;
 
-    const trail = trails.find(t => t.trail_id === focusTrailId);
+    const trail = trails.find((t) => t.trail_id === focusTrailId);
     if (!trail?.geo) return;
 
     const geoJson =
@@ -26,16 +24,17 @@ export default function ZoomToTrail() {
         : trail.geo;
 
     const layer = L.geoJSON(geoJson);
+    const bounds = layer.getBounds();
 
-    map.flyToBounds(layer.getBounds(), {
-        padding: [60, 60],
-        duration: 1.5,
+    map.flyToBounds(bounds, {
+        paddingTopLeft: [60, 60],
+        paddingBottomRight: [60, 220], // 👈 PLASS TIL SHEET 🔥
+        duration: 1.2,
         maxZoom: 14,
     });
-    hasZoomedRef.current = true;
-    setFocusTrailId(null);
 
-    }, [focusTrailId, trails, map, setFocusTrailId]);
+    prevTrailIdRef.current = focusTrailId;
+  }, [focusTrailId, trails, map]);
 
-    return null;
+  return null;
 }

@@ -24,7 +24,7 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [modal, setModal] = useState<ModalType>(null);
   const [trail, setTrail] = useState<TrailPreview | null>(null);
   const [resetMode, setResetMode] = useState(false);
-  const { favorites, toggleFavorite } = useFavorites();
+  const { favorites, toggleFavorite } = useFavorites();     
 
   const openModal = (modal: ModalType) => {
     setTrail(null);
